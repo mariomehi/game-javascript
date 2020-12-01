@@ -21,11 +21,6 @@ const directions = new Map([
 
 let bird = document.getElementById("bird");
 let gnat = document.getElementById("gnat");
-let stategnat = {
-  x: 300,
-  y: 300,
-  direction: Keys.RIGHT,
-};
 let playground = document.getElementById("playground");
 
 let state = {
@@ -33,6 +28,10 @@ let state = {
   y: 200,
   direction: Keys.RIGHT,
 };
+var posizione=`${state.x}`;
+
+let gnatx=300;
+let gnaty=300;
 
 document.addEventListener("keydown", function(event) {
   // if different from 37,38,39,40 return
@@ -56,35 +55,37 @@ document.getElementById("gnat").style.transform= `translate(300px, 300px)`;
 function render() {
   let translation = `translate(${state.x}px, ${state.y}px)`;
   bird.style.transform = `${translation}`;
-  
-// AGGIUNTA
-let translationn = `translate(100px, 100px)`;
-let positx=`${state.x}`;
 
-if ( ((`${state.x}`) > x-100) || ((`${state.x}`) < 0) || ((`${state.y}`) > y-100) || ((`${state.y}`) < 0) ) {
+console.log("x:" + x);
+console.log("pos: " + posizione);
+console.log("statx: " + `${state.x}`);
+
+//CONTROLLO BORDI
+if ( (`${state.x}` > x-100) || (`${state.y}` < 0) || (`${state.y}` > y-100) || (`${state.x}` < 0) ) {
+
         window.alert("Bang!");
-        let randb = Math.floor((Math.random() * x) + 1);
+        let randb = Math.floor((Math.random() * x-100) + 1);
+
         document.getElementById("bird").style.transform = `translate(${randb}px, ${randb}px)`;
+
+        state.x=randb;
+        state.y=randb;
 
 } else {
 
-let gnatx=`${stategnat.x}`;
-let gnaty=`${stategnat.y}`;
-//gnatx=eval(gnatx)+100;
-//console.log("Gnat " + gnatx);
 
 if ( (((`${state.x}`) > eval(gnatx)-100) && ((`${state.x}`) < eval(gnatx)+100))  && (((`${state.y}`) > eval(gnaty)-100) && ((`${state.y}`) < eval(gnaty)+100)) ) 
   {
     window.alert("Perso!");
     
-    let randX = Math.floor((Math.random() * x) + 1);
-    let randY = Math.floor((Math.random() * y) + 1);
-    console.log(randX);
-    console.log(randY);
+    var randX = Math.floor((Math.random() * x) + 1);
+    var randY = Math.floor((Math.random() * y) + 1);
     //document.getElementById("gnat").style.top = randY + "px";
-    //document.getElementById("gnat").style.right = randX + "px";
-
+    //document.getElementById("gnat").style.right = randX + "px"
 document.getElementById("gnat").style.transform = `translate(${randX}px, ${randY}px)`;
+
+  gnatx=randX;
+  gnaty=randY;
   }
 
 }
